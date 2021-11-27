@@ -1,72 +1,39 @@
-import { Grid } from "@material-ui/core";
-import "./pokemon.css";
 
-export default function Pokemon({ pokemon }) {
-  // const [pokemon, setPokemon] = useState([]);
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
 
-  // const URL = props.pokemonData.map((element) => element["url"]);
-  // console.log(props.pokemonData);
-  // console.log(Object.values(props.pokemonData));
-  // console.log(URL);
-
-  // fetchPokemon(URL[0]);
-
-  // function fetchPokemon(url) {
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((pokemon) => {
-  //       console.log(pokemon.name);
-  //       // setPokemon(pokemon);
-  //     });
-  // }
-
-  //   return (
-  //     <div>
-  //       <PokemonList pokemons={props.pokemonData} />
-  //     </div>
-  //   );
-  // }
-
+export default function Pokemon({ pokemon }){
   return (
-    <>
-      <div className="gridContainer">
-        {/* <div className={classes.grid}> */}
-        <div>
-          <div
-          // className="pokeType"
-          // style={{ backgroundColor: pokeColor[pokemon.name] }}
-          >
-            <img
-              className="pokeImage"
-              src={pokemon.sprites.front_default}
-              alt="pokemon"
-            />
-
-            <Grid container>
-              <Grid item xs={6}>
-                <div className="pokeName">{pokemon.name}</div>
-              </Grid>
-              <Grid item xs={6}>
-                <div className="pokeOwned">
-                  <div>
-                    # <span>{pokemon.order}</span>
-                  </div>
-                </div>
-              </Grid>
-            </Grid>
-
-            <div className="pokeTypes">
+    <Card sx={{ maxWidth: 300 }} >
+      <CardMedia
+        component="img"
+        width='150px'
+        height='auto'
+        image={`https://img.pokemondb.net/artwork/large/${pokemon.name}.jpg`}
+        alt="pokemon"
+      />
+      <CardContent style={{backgroundColor: 'white'}}>
+        <Typography gutterBottom variant="h5" component="div" style={{backgroundColor: 'white'}}>
+        {pokemon.name[0].toUpperCase()+ pokemon.name.slice(1)}
+        </Typography>
+        <Typography variant="h6" color="text.secondary" style={{backgroundColor: 'white'}}>
+        <div style={{backgroundColor: 'white'}}>
+              <span style={{backgroundColor: 'white'}}> Skills : </span>
               {pokemon.types.map((type, i) => {
                 return (
-                  <div className="pokeSkill" key={i}>
+                  <div style={{backgroundColor: 'white'}} key={i}>
                     {type.type.name}
                   </div>
                 );
               })}
             </div>
-          </div>
-        </div>
-      </div>
-    </>
+        </Typography>
+      </CardContent>
+    </Card>
   );
 }
+
+

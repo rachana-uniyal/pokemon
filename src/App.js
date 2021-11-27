@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Pokemon from "./Pokemon";
 import "./App.css";
 
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
-  const apiURL = "https://pokeapi.co/api/v2/pokemon?limit=20";
+  const [loading, isLoading] = useState(true)
+  const apiURL = "https://pokeapi.co/api/v2/pokemon?limit=1118";
 
   useEffect(() => {
     async function fetchData() {
       let response = await getAllPokemon(apiURL);
       await loadPokemon(response.results);
+      isLoading(false)
       console.log(response);
     }
     fetchData();
@@ -46,19 +47,20 @@ function App() {
         });
     });
   };
-  return (
-    <Router>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          component={pokemonData.map((pokemon, i) => {
-            return <Pokemon key={i} pokemon={pokemon} />;
-          })}
-        />
-      </Routes>
-    </Router>
-  );
-}
+
+return (
+    <div>
+      <div className='App-header'><h1>Pokemons</h1></div>
+    <div >
+    {loading 
+      ? <h1>Loading...</h1> 
+      : <div className='gridContainer'>{pokemonData.map((pokemon, i) => {
+                return <Pokemon key={i} pokemon={pokemon} />
+              })} </div>
+    }
+      </div>
+      </div>
+)
+ }
 
 export default App;

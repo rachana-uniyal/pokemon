@@ -1,10 +1,8 @@
-.App {
-  text-align: center;
-}
+
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: lightsalmon;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,6 +11,20 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1{
+  background-color: lightsalmon;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+  background-color: lightsteelblue;
+}
+
+.gridContainer {
+  width: 90%;
+  display: grid;
+  margin: 20px auto;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
 }
