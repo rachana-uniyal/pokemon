@@ -10,6 +10,7 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
+      document.title = 'Pokemons';
       let response = await getAllPokemon(apiURL);
       await loadPokemon(response.results);
       isLoading(false)
