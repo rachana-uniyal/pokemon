@@ -16,10 +16,10 @@ export default function Pokemon({ pokemon }){
         alt="pokemon"
       />
       <CardContent style={{backgroundColor: 'white'}}>
-        <Typography gutterBottom variant="h5" component="div" style={{backgroundColor: 'white'}}>
+        <Typography gutterBottom variant="h5" component="div" align="center" style={{backgroundColor: 'white'}}>
         {pokemon.name[0].toUpperCase()+ pokemon.name.slice(1)}
         </Typography>
-        <Typography variant="h6" color="text.secondary" style={{backgroundColor: 'white'}}>
+        <Typography variant="h6" color="purple" align="center" style={{backgroundColor: 'white'}}>
         <div style={{backgroundColor: 'white'}}>
               <span style={{backgroundColor: 'white'}}> Skills : </span>
               {pokemon.types.map((type, i) => {
