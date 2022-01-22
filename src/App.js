@@ -1,19 +1,23 @@
-import { useEffect, useState } from "react";
-
+import React,{ useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import Pokemon from "./Pokemon";
 import "./App.css";
 
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
-  const [loading, isLoading] = useState(true)
-  const apiURL = "https://pokeapi.co/api/v2/pokemon?limit=1118";
+  const [loading, setLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState(0);
+  const currentPageUrl = "https://pokeapi.co/api/v2/pokemon?limit=100";
+  const pokemonPerPage = 20;
+  const pagesVisited = pageNumber * pokemonPerPage;
 
+  
   useEffect(() => {
     async function fetchData() {
       document.title = 'Pokemons';
-      let response = await getAllPokemon(apiURL);
+      let response = await getAllPokemon(currentPageUrl);
       await loadPokemon(response.results);
-      isLoading(false)
+      setLoading(false)
       console.log(response);
     }
     fetchData();
@@ -44,9 +48,22 @@ function App() {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
+          console.log("data in getAllPokemon",data)
           resolve(data);
         });
     });
+  };
+  
+  const displayPokemons = pokemonData
+                    .slice(pagesVisited, pagesVisited+pokemonPerPage)
+                    .map((pokemon, i) => {
+                      return <Pokemon key={i} pokemon={pokemon} />
+                    })
+
+  const pageCount = Math.ceil(pokemonData.length / pokemonPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
 
 return (
@@ -55,9 +72,30 @@ return (
     <div >
     {loading 
       ? <h1>Loading...</h1> 
-      : <div className='gridContainer'>{pokemonData.map((pokemon, i) => {
-                return <Pokemon key={i} pokemon={pokemon} />
-              })} </div>
+      : 
+        <div className='gridContainer'>{displayPokemons}
+      <nav aria-label="Page navigation example">
+      <ReactPaginate
+        previousLabel={"<<"}
+        nextLabel={">>"}
+        breakLabel={"..."}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={changePage}
+        containerClassName={"pagination justify-content-end"}
+        pageClassName={"page-item"}
+        pageLinkClassName={"page-link"}
+        previousClassName={"page-item"}
+        previousLinkClassName={"page-link"}
+        nextClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        breakClassName={"page-item"}
+        breakLinkClassName={"page-link"}
+        activeClassName={"active"}
+      />
+      </nav>
+      </div>
     }
       </div>
       </div>
@@ -65,3 +103,5 @@ return (
  }
 
 export default App;
+
+
